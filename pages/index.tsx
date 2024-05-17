@@ -1,6 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAccount, useConnect } from "wagmi";
@@ -151,7 +152,14 @@ const Home: NextPage = () => {
                   <a></a>
                 </li>
                 <li>
-                  <a>Portfolio</a>
+                  <Link
+                    href="https://mint-page-ijazah.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    passHref
+                  >
+                    mint-page
+                  </Link>
                 </li>
                 <li>
                   <a>About</a>
@@ -180,97 +188,51 @@ const Home: NextPage = () => {
               <div className="max-w-md">
                 <h1 className="text-5xl font-bold">Revitalize Your Identity</h1>
                 <p className="py-6">
-                  Provident cupiditate voluptatem et in. Quaerat fugiat ut
-                  assumenda excepturi exercitationem quasi. In deleniti eaque
-                  aut repudiandae et a id nisi.
+                  PERANCANGAN SISTEM VERIFIKASI IDENTITAS DIGITAL DENGAN
+                  PEMANFAATAN SOULBOUND TOKEN (SBT) BERBASIS BLOCKCHAIN ETHEREUM
+                  DALAM KONTEKS WEB 3.0 ERAs
                 </p>
               </div>
             </div>
           </div>
         </div>
-        {/* <div
-          className="section"
-          style={{ margin: "40px 40px 40px 40px", marginTop: "-200px" }}
-        >
-          <div className="row">
-            <div className="col">
-              <div className="card lg:card-side bg-base-100 shadow-xl">
-                <figure>
-                  <img
-                    src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg"
-                    alt="Album"
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">
-                    Silahkan Verifikasi Keaslian Ijazah Anda!
-                  </h2>
-                  <p> </p>
-                  {loading && <p>Loading ...</p>}
-                  {verifyPressed && !loading && isStudentSBT && (
-                    <p>
-                      Anda Terverifikasi Sebagai Lulusan Universitas Sriwijaya
-                    </p>
-                  )}
-                  {verifyPressed && !loading && !isStudentSBT && (
-                    <p>Anda belum terverifikasi</p>
-                  )}
-                  <div className="card-actions justify-end">
-                    {isConnected && !verifyPressed && (
-                      <>
-                        <button
-                          style={{ marginTop: 24 }}
-                          className="btn btn-active"
-                          onClick={getRulesStatus}
-                        >
-                          Verify
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
 
-        <div
-          className="section "
-          style={{
-            marginTop: "-227px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <div className="row">
-            <div className="col">
-              <div className="card w-96 bg-base-100 shadow-xl">
-                <figure>
-                  <Image
-                    layout="responsive"
-                    src="/nft.png"
-                    width="500"
-                    height="500"
-                    alt="RainbowKit Demo NFT"
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">
-                    Silahkan Cek Keaslian Ijazah Anda!
-                  </h2>
-                  <p> </p>
-                  {loading && <p>Loading ...</p>}
-                  {verifyPressed && !loading && isStudentSBT && (
-                    <p>
-                      Anda Terverifikasi Sebagai Lulusan Universitas Sriwijaya
-                    </p>
-                  )}
-                  {verifyPressed && !loading && !isStudentSBT && (
-                    <p>Ijazah anda tidak valid</p>
-                  )}
-                  <div className="card-actions justify-end">
-                    {isConnected && !verifyPressed && (
-                      <>
+        {isConnected && (
+          <div
+            className="section"
+            style={{
+              marginTop: "-227px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div className="row">
+              <div className="col">
+                <div className="card w-96 bg-base-100 shadow-xl">
+                  <figure>
+                    <Image
+                      layout="responsive"
+                      src="/nft.png"
+                      width="500"
+                      height="500"
+                      alt="RainbowKit Demo NFT"
+                    />
+                  </figure>
+                  <div className="card-body">
+                    <h2 className="card-title">
+                      Silahkan Cek Keaslian Ijazah Anda!
+                    </h2>
+                    {loading && <p>Loading ...</p>}
+                    {verifyPressed && !loading && isStudentSBT && (
+                      <p>
+                        Anda Terverifikasi Sebagai Lulusan Universitas Sriwijaya
+                      </p>
+                    )}
+                    {verifyPressed && !loading && !isStudentSBT && (
+                      <p>Ijazah anda tidak valid</p>
+                    )}
+                    <div className="card-actions justify-end">
+                      {!verifyPressed && (
                         <button
                           style={{ marginTop: 24 }}
                           className="btn btn-active"
@@ -278,14 +240,14 @@ const Home: NextPage = () => {
                         >
                           Verify
                         </button>
-                      </>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
 
       <footer
