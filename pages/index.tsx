@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAccount, useConnect } from "wagmi";
+import Image from "next/image";
 import React from "react";
 
 interface Role {
@@ -17,6 +18,7 @@ const Home: NextPage = () => {
   const [isStudentSBT, setIsStudentSBT] = useState(false);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState<string>("");
+  const [verifyPressed, setVerifyPressed] = useState(false);
 
   // const truncateAddress = (address: string) => {
   //   return `${address.substring(0.2)}...${address.substring(
@@ -47,14 +49,15 @@ const Home: NextPage = () => {
     {
       roleId: STUDENTSBT,
       minToken: "1",
-      chainId: 1,
-      contractAddress: "0x7492E30d60D96c58ED0f0DC2FE536098C620C4c0",
-      type: "ERC721",
+      chainId: 11155111,
+      contractAddress: "0x9642cDDfD0664BCB5CDF4D920C05cEEfAB425fde",
+      type: "ERC1155",
     },
   ];
 
   const getRulesStatus = async () => {
     setLoading(true);
+    setVerifyPressed(true);
     try {
       const isConnected = window.ethereum.isConnected();
       if (!isConnected) {
@@ -95,10 +98,12 @@ const Home: NextPage = () => {
       setLoading(false);
 
       for (const role of result.roles) {
-        switch (role.id) {
-          case STUDENTSBT:
-            setIsStudentSBT(true);
-            break;
+        if (role.granted) {
+          switch (role.id) {
+            case STUDENTSBT:
+              setIsStudentSBT(true);
+              break;
+          }
         }
       }
     } catch (error) {
@@ -164,40 +169,133 @@ const Home: NextPage = () => {
       </header>
 
       <main>
-        <div className="section">
+        <div
+          className="section"
+          style={{
+            marginTop: "-150px",
+          }}
+        >
           <div className="hero min-h-screen bg-base-200">
             <div className="hero-content text-center">
               <div className="max-w-md">
-                <h1 className="text-5xl font-bold">Hello there</h1>
+                <h1 className="text-5xl font-bold">Revitalize Your Identity</h1>
                 <p className="py-6">
                   Provident cupiditate voluptatem et in. Quaerat fugiat ut
                   assumenda excepturi exercitationem quasi. In deleniti eaque
                   aut repudiandae et a id nisi.
                 </p>
-                {/* Menggunakan kondisi untuk menampilkan tombol verifikasi */}
-                {isConnected && (
-                  <button
-                    style={{ marginTop: 24 }}
-                    className="btn btn-active"
-                    // onClick={() => router.push('/verify')}
-                    onClick={getRulesStatus}
-                  >
-                    Verify
-                  </button>
-                )}
-                {loading && <p>Loading </p>}
-                {isStudentSBT && (
-                  <p>
-                    Anda Terverifikasi Sebagai Lulusan Universitas Sriwijaya
-                  </p>
-                )}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div
+          className="section"
+          style={{ margin: "40px 40px 40px 40px", marginTop: "-200px" }}
+        >
+          <div className="row">
+            <div className="col">
+              <div className="card lg:card-side bg-base-100 shadow-xl">
+                <figure>
+                  <img
+                    src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.jpg"
+                    alt="Album"
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">
+                    Silahkan Verifikasi Keaslian Ijazah Anda!
+                  </h2>
+                  <p> </p>
+                  {loading && <p>Loading ...</p>}
+                  {verifyPressed && !loading && isStudentSBT && (
+                    <p>
+                      Anda Terverifikasi Sebagai Lulusan Universitas Sriwijaya
+                    </p>
+                  )}
+                  {verifyPressed && !loading && !isStudentSBT && (
+                    <p>Anda belum terverifikasi</p>
+                  )}
+                  <div className="card-actions justify-end">
+                    {isConnected && !verifyPressed && (
+                      <>
+                        <button
+                          style={{ marginTop: 24 }}
+                          className="btn btn-active"
+                          onClick={getRulesStatus}
+                        >
+                          Verify
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> */}
+
+        <div
+          className="section "
+          style={{
+            marginTop: "-227px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div className="row">
+            <div className="col">
+              <div className="card w-96 bg-base-100 shadow-xl">
+                <figure>
+                  <Image
+                    layout="responsive"
+                    src="/nft.png"
+                    width="500"
+                    height="500"
+                    alt="RainbowKit Demo NFT"
+                  />
+                </figure>
+                <div className="card-body">
+                  <h2 className="card-title">
+                    Silahkan Cek Keaslian Ijazah Anda!
+                  </h2>
+                  <p> </p>
+                  {loading && <p>Loading ...</p>}
+                  {verifyPressed && !loading && isStudentSBT && (
+                    <p>
+                      Anda Terverifikasi Sebagai Lulusan Universitas Sriwijaya
+                    </p>
+                  )}
+                  {verifyPressed && !loading && !isStudentSBT && (
+                    <p>Ijazah anda tidak valid</p>
+                  )}
+                  <div className="card-actions justify-end">
+                    {isConnected && !verifyPressed && (
+                      <>
+                        <button
+                          style={{ marginTop: 24 }}
+                          className="btn btn-active"
+                          onClick={getRulesStatus}
+                        >
+                          Verify
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
 
-      <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+      <footer
+        className="footer footer-center p-10 text-base-content rounded"
+        style={{
+          marginTop: "200px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <nav className="grid grid-flow-col gap-4">
           <a className="link link-hover">About us</a>
           <a className="link link-hover">Contact</a>
