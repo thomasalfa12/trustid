@@ -51,7 +51,7 @@ const Home: NextPage = () => {
       roleId: STUDENTSBT,
       minToken: "1",
       chainId: 11155111,
-      contractAddress: "0x926ebf13ab2823be391cbd8d02deeee7c7b552d4",
+      contractAddress: "0x64d37e898d957f4b7ce19d4ce7a16f7d2c13e920",
       type: "ERC1155",
     },
   ];
